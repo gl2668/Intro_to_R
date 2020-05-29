@@ -20,7 +20,8 @@ The course content covers:
 # Course Content
 **Slides:**
 
-- [Class 1](https://raw.githubusercontent.com/gl2668/R_For_Data_Science/master/slides/lesson_1.html)
+- [Class 1](https://github.com/gl2668/R_For_Data_Science/blob/master/slides/lesson_1.html)
+- [Class 2](https://github.com/gl2668/R_For_Data_Science/blob/master/slides/lesson_2.html)
 
 **Practice Assignments:**
 
