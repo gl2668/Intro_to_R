@@ -1,0 +1,310 @@
+---
+title: "Class 1 - Introduction to R"
+subtitle: R for Data Science
+author: "Gerald Lee"
+date: "May 26, 2020"
+output:
+  ioslides_presentation:
+    incremental: no
+    keep_md: yes
+    smaller: no
+  slidy_presentation:
+    incremental: no
+mode: selfcontained
+always_allow_html: yes
+---
+
+```{r packages, message = FALSE, warning = FALSE, echo=FALSE}
+# For installing necessary packages
+```
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+
+# A Prefix nulling hook.
+
+# Make sure to keep the default for normal processing.
+default_output_hook <- knitr::knit_hooks$get("output")
+
+# Output hooks handle normal R console output.
+knitr::knit_hooks$set( output = function(x, options) {
+
+  comment <- knitr::opts_current$get("comment")
+  if( is.na(comment) ) comment <- ""
+  can_null <- grepl( paste0( comment, "\\s*\\[\\d?\\]" ),
+                     x, perl = TRUE)
+  do_null <- isTRUE( knitr::opts_current$get("null_prefix") )
+  if( can_null && do_null ) {
+    # By default R print output aligns at the right brace.
+    align_index <- regexpr( "\\]", x )[1] - 1
+    # Two cases: start or newline
+    re <- paste0( "^.{", align_index, "}\\]")
+    rep <- comment
+    x <- gsub( re, rep,  x )
+    re <- paste0( "\\\n.{", align_index, "}\\]")
+    rep <- paste0( "\n", comment )
+    x <- gsub( re, rep,  x )
+  }
+
+  default_output_hook( x, options )
+
+})
+
+knitr::opts_template$set("kill_prefix"=list(comment=NA, null_prefix=TRUE))
+
+
+## Normal Setup From Here
+library(knitr)
+
+opts_chunk$set(fig.path="images/",
+               cache.path="cache/",
+               cache=TRUE,
+               echo=TRUE,
+               message=FALSE,
+               warning=FALSE)
+```
+
+
+## Let's Get Started
+
+- Download [R](https://courses.edx.org/courses/UTAustinX/UT.7.01x/3T2014/56c5437b88fa43cf828bff5371c6a924/) & [R Studio](https://rstudio.com/)
+- Open R Studio and Explore the Console
+- Helpful Reading: Hadley Wickham's [book](https://r4ds.had.co.nz/)
+
+## What is R?
+
+- R is a programming language that is commonly used for data science
+- R Studio is the IDE that allows you to code in R (and other languages like SQL and python)
+  - IDE stands for Integrated Development Environment
+  - Allows you to write functions and operations
+  - Tidy and Visualize data
+
+## RStudio
+
+- You have the Console, Environment, Files and Packages
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/rstudio.png")
+```
+
+## What is Markdown?
+
+- R Markdown is the tool for you to report and present your code / output
+  - **File -> New File -> R Markdown -> Document -> HTML**
+- Set output to different file formats (with the _Knit_ button)
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/markdown_what_is2.png")
+```
+
+## Markdown Syntax
+
+- Need to learn markdown syntax
+- Use the **cheat sheet** as a reference (google markdown cheat sheet)
+- You can use Markdown to embed formatting instructions into your text. For example, you can make a word _italicized_ by surrounding it in asterisks, **bold** by surrounding it in two asterisks, and `monospaced` (like code) by surrounding it in backticks:
+
+\**italics*\*, \*\***bold**\*\*, `` `code` ``
+ 
+- You can turn a word into a [link](www.google.com) by surrounding it in hard brackets and then placing the link behind it in parentheses, like this:
+
+[Columbia U\](www.columbia\.edu)
+
+## R Markdown Cheat Sheet
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/rmarkdown-cheatsheet-2.0_p1.png")
+```
+
+## R Markdown Cheat Sheet
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/rmarkdown-cheatsheet-2.0_p2.png")
+```
+
+## Headers
+
+To create titles and headers, use leading hastags. The number of hashtags determines the header's level:
+
+\# First level header  
+\#\# Second level header  
+\#\#\# Third level header  
+
+## Lists
+
+To make a bulleted list in Markdown, place each item on a new line after an asterisk and a space, like this:
+
+\* item 1  
+\* item 2  
+\* item 3
+
+You can make an ordered list by placing each item on a new line after a number followed by a period followed by a space.
+
+1\. item 1  
+2\. item 2  
+3\. item 3
+
+## Embedding equations
+
+You can also use the Markdown syntax to embed latex math equations into your reports. To embed an equation in its own centered equation block, surround the equation with two pairs of dollar signs like this,
+
+`$$1 + 1 = 2$$`
+
+To embed an equation inline, surround it with a single pair of dollar signs, like this: `$1 + 1 = 2$`
+
+All [standard Latex symbols](https://en.wikibooks.org/wiki/LaTeX/Mathematics) work.
+
+## Including R code inline and in chunks
+
+- R code can be included as chunk with 
+
+    \`\`\`{r} \`\`\`  
+  
+  or inline with a single tickmark.
+
+- R functions sometimes return messages, warnings, and even error messages. By default, R Markdown will include these messages in your report. You can use the `message`, `warning` and `error` options to prevent R Markdown from displaying these.
+
+- Keyboard Shortcut to create a new chunk is `command` + `option` + `I`
+
+## Popular chunk options
+
+Three of the most popular chunk options are `echo`, `eval` and `results`.
+
+- If `echo = FALSE`, R Markdown will not display the code in the final document (but it will still run the code and display its results unless told otherwise).
+
+- If `eval = FALSE`, R Markdown will not run the code or include its results, (but it will still display the code unless told otherwise).
+
+- If `results = 'hide'`, R Markdown will not display the results of the code (but it will still run the code and display the code itself unless told otherwise).
+
+## Knitr
+
+[knitr](https://yihui.name/knitr/) is an engine for dynamic report generation with R and is used to convert (or "knit") R Markdown files into the desired output format.
+
+## Other Output Formats
+
+- html_document
+- pdf_document
+- word_document
+- beamer_presentation / slidy_presentation / ioslides_presentation
+- github_document
+
+## Packages and Dependencies
+
+- Installing packages
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+```
+
+- Or use a package manager, e.g. Pacman
+
+```{r}
+#install.packages("pacman")
+library(pacman)
+p_load(dplyr, ggplot2)
+```
+
+## Core Packages in R
+
+- `ggplot2` (graphics)
+- `tibble` (data frames and tables)
+- `tidyr` (make tidy)
+- `readr` (read in tabular formats)
+- `purrr` (functional programming)
+- `dplyr` (manipulate data)
+- `tidyverse` (All the above)
+
+## Importing / Reading in Data
+
+```{r Read in data}
+# Using the data.table package to read files
+p_load(data.table)
+flights <- fread("https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv")
+```
+
+```{r}
+# Using the readxl package to read in Excel files
+library(readxl)
+rawData <- read_excel(path = "data/data_example1.xlsx", # Path to file
+                    sheet = 2, # We want the second sheet
+                    skip = 1, # Skip the first row
+                    na = "NA") # Missing characters are "NA"
+```
+
+## Take a Look at the Data {.smaller}
+
+```{r}
+head(flights) # head() / tail() to show 5 top/bottom rows
+```
+
+## Another Way to Look at Data {.smaller}
+
+```{r}
+dim(flights) # Get the shape of the data
+```
+
+```{r}
+colnames(flights) # Get the column names
+```
+
+## Seeking help
+
+- Look at the help tab of your console
+
+```{r}
+?ggplot2
+```
+
+```{r}
+help(dplyr)
+```
+
+
+## Data Science Flow Chart {.smaller}
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/datascience_progress.png")
+```
+
+- We have just explored the 1st part (Importing data)
+- This course will focus on Tidying, Transforming and some Visualisation
+- Not a full-fledged Statistics or Machine Learning Course
+
+## Why learn Data Science & R? {.smaller}
+
+- In-demand skill
+- Format of Data is changing and traditional tools like Microsoft Excel is insufficient for certain tools and functions
+- Easy to carry out functions like Webscrapping, Machine Learning, Statistical Analysis and Web / Dashboard building
+- R is an easy first programming language to learn
+- R is free, open source, 14,837 packages available
+- Rstudio is an arguably better IDE than Jupyter (IMO it is the Apple to the Microsoft)
+
+## Possible Projects {.smaller}
+
+- Websites like https://nsgrantham.shinyapps.io/tidytuesdayrocks/
+- Dashboards like https://gadenbuie.shinyapps.io/tweet-conf-dash/
+- Stock Portfolio tool like https://shawnlin.shinyapps.io/porfact-shiny/
+- Real Estate Investment Analysis like https://phillyo.shinyapps.io/intelligentsia/
+- Machine Learning for Prediction / Classification
+
+## What will we cover next? {.smaller}
+
+- Class 2:
+  - Simple data manipulation with `dplyr`
+  - Data visualization with `ggplot2`
+- Class 3:
+  - Function Writing with `purrr`
+  - Some Statistical Analysis with `psych` and base R
+- Class 4:
+  - Statistical Analysis (continued)
+  - Basic Machine Learning Concepts with `caret`
+  
+## What will we cover next? {.smaller}
+
+- Class 5:
+  - Working with strings using `stringr` and `rebus` packages
+  - Simple NLP using `tidytext`, `tm` and `wordcloud`
+- Class 6:
+  - Webscrapping with `rvest`
+  - API with `httr`
+- Class 7:
+  - Dashboard & Website Building with `shiny`
