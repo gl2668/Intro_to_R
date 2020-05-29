@@ -19,3 +19,5 @@ The course content covers:
 
 # Course Content
 Slides, Practice Assignments and Datasets will be posted here.
+
+- [Class 1](http://htmlpreview.github.io/?https://raw.githubusercontent.com/gl2668/R_For_Data_Science/master/slides/lesson_1.html)
