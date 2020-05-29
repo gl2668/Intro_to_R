@@ -18,6 +18,10 @@ The course content covers:
 - Dashboard & Website Building with `shiny`
 
 # Course Content
-Slides, Practice Assignments and Datasets will be posted here.
+Slides:
 
-- [Class 1](http://htmlpreview.github.io/?https://raw.githubusercontent.com/gl2668/R_For_Data_Science/master/slides/lesson_1.html)
+- [Class 1](https://raw.githubusercontent.com/gl2668/R_For_Data_Science/master/slides/lesson_1.html)
+
+Practice Assignments:
+
+Datasets:
