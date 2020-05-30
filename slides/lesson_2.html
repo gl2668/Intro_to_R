@@ -6350,10 +6350,9 @@ gapminder %&gt;%
 ##             &lt;dbl&gt;
 ## 1            49.1</pre>
 
-</article></slide><slide class=""><hgroup><h2>Use <code>summarize</code>, filter and <code>group_by</code> to calculate the mean lifeExp per country in 1952</h2></hgroup><article  id="use-summarize-filter-and-group_by-to-calculate-the-mean-lifeexp-per-country-in-1952">
+</article></slide><slide class=""><hgroup><h2>Use <code>summarize</code>, filter and <code>group_by</code> to calculate the mean lifeExp per country across time</h2></hgroup><article  id="use-summarize-filter-and-group_by-to-calculate-the-mean-lifeexp-per-country-across-time">
 
 <pre class = 'prettyprint lang-r'>gapminder %&gt;%
-  filter(year == 1952) %&gt;%
   group_by(country) %&gt;%
   summarize(mean(lifeExp)) %&gt;%
   head()</pre>
@@ -6361,12 +6360,12 @@ gapminder %&gt;%
 <pre >## # A tibble: 6 x 2
 ##   country     `mean(lifeExp)`
 ##   &lt;fct&gt;                 &lt;dbl&gt;
-## 1 Afghanistan            28.8
-## 2 Albania                55.2
-## 3 Algeria                43.1
-## 4 Angola                 30.0
-## 5 Argentina              62.5
-## 6 Australia              69.1</pre>
+## 1 Afghanistan            37.5
+## 2 Albania                68.4
+## 3 Algeria                59.0
+## 4 Angola                 37.9
+## 5 Argentina              69.1
+## 6 Australia              74.7</pre>
 
 </article></slide><slide class=""><hgroup><h2>Try out <code>summarize</code></h2></hgroup><article  id="try-out-summarize">
 

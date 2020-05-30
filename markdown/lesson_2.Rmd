@@ -290,11 +290,10 @@ gapminder %>%
   summarize(mean(lifeExp))
 ```
 
-## Use `summarize`, filter and `group_by` to calculate the mean lifeExp per country in 1952
+## Use `summarize`, filter and `group_by` to calculate the mean lifeExp per country across time
 
 ```{r}
 gapminder %>%
-  filter(year == 1952) %>%
   group_by(country) %>%
   summarize(mean(lifeExp)) %>%
   head()
