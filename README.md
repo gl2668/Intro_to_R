@@ -9,7 +9,7 @@ The course content covers:
 - Data wrangling and manipulation with `dplyr`
 - Data visualization with `ggplot2`
 - Function Writing with `purrr`
-- Baisc Statistical Analysis with `psych` and base R
+- Basic Statistical Analysis with `psych` and base R
 - Basic Machine Learning Concepts with `caret`
 - Working with strings using `stringr` and `rebus` packages
 - Simple NLP using `tidytext`, `tm` and `wordcloud`
