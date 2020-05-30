@@ -1,0 +1,576 @@
+---
+title: "Class 2 - Visualize Data"
+subtitle: R for Data Science
+author: "Gerald Lee"
+date: "May 29, 2020"
+output:
+  ioslides_presentation:
+    incremental: no
+    keep_md: yes
+    smaller: no
+  slidy_presentation:
+    incremental: no
+mode: selfcontained
+always_allow_html: yes
+---
+
+```{r packages, message = FALSE, warning = FALSE, echo=FALSE}
+# For installing necessary packages
+```
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+# A Prefix nulling hook.
+
+# Make sure to keep the default for normal processing.
+default_output_hook <- knitr::knit_hooks$get("output")
+
+# Output hooks handle normal R console output.
+knitr::knit_hooks$set( output = function(x, options) {
+
+  comment <- knitr::opts_current$get("comment")
+  if( is.na(comment) ) comment <- ""
+  can_null <- grepl( paste0( comment, "\\s*\\[\\d?\\]" ),
+                     x, perl = TRUE)
+  do_null <- isTRUE( knitr::opts_current$get("null_prefix") )
+  if( can_null && do_null ) {
+    # By default R print output aligns at the right brace.
+    align_index <- regexpr( "\\]", x )[1] - 1
+    # Two cases: start or newline
+    re <- paste0( "^.{", align_index, "}\\]")
+    rep <- comment
+    x <- gsub( re, rep,  x )
+    re <- paste0( "\\\n.{", align_index, "}\\]")
+    rep <- paste0( "\n", comment )
+    x <- gsub( re, rep,  x )
+  }
+
+  default_output_hook( x, options )
+
+})
+
+knitr::opts_template$set("kill_prefix"=list(comment=NA, null_prefix=TRUE))
+
+
+## Normal Setup From Here
+library(knitr)
+
+opts_chunk$set(fig.path="images/",
+               cache.path="cache/",
+               cache=TRUE,
+               echo=TRUE,
+               message=FALSE,
+               warning=FALSE)
+```
+
+
+## Let's Get Started
+
+- Start by Downloading the necessary packages
+- We will need `gapminder`, `ggthemes`, `plotly` and `tidyverse` 
+  - The main package we are using is `ggplot2` but that is in the `tidyverse` suite
+
+## Load Libraries
+
+```{r}
+library(pacman)
+p_load(gapminder, ggthemes, plotly, tidyverse)
+```
+
+## Data Visualisation with `ggplot2`
+
+- 3 key grammatical elements
+  - **Data**: the dataset that is being plotted
+  - **Aes**thetics:the scales onto which we map our data
+  - **Geom**etries: the visual elements used for our data
+  - Every ggplot2 plot has these 3 key components
+
+## Grammatical elements
+
+```{r, echo=FALSE, out.width = "60%"}
+knitr::include_graphics("images/ggplotelements.png")
+```
+
+## 1st Layer - the data
+
+```{r}
+ggplot(gapminder)
+```
+
+## 2nd layer - the aesthetics
+
+```{r}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp))
+```
+
+## 3rd layer - the geometries
+
+```{r}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+```
+
+## Next steps - Refining the visualisation
+
+- In the current scatterplot, we are visualizing 2 variables (bivariate)
+  - We want to find out how `lifeExp` relates to `gdpPercap`
+  - We can see that there is a generally positive linear relationship, i.e. as `lifeExp` increases, `gdpPercap` also increases holding all else constant (vice versa too)
+  - But the graphic is no very informative and clear
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+```
+
+## Next steps - Refining the visualisation
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+```
+
+## Next steps - Focusing on the aesthetics
+
+- Annotating with graphs labels
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+- Adding Colours to add another variable
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  # Colour can help highlight a different variable
+  geom_point(alpha = 0.5, size = 2) + 
+  # Alpha stands for transparency, size denotes the point size
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  # Colour can help highlight a different variable
+  geom_point(alpha = 0.5, size = 2) + # Alpha stands for transparency, size denotes the point size
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+- Adding Size to add another variable
+
+```{r, eval = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) + 
+  # Size denotes the population size
+  geom_point(alpha = 0.5) + 
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) + 
+  # Size denotes the population size
+  geom_point(alpha = 0.5) + 
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+- Facets help us break up visualisations to their individual components
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  # . ~ continent tells us to facet the plot by the continent
+  facet_grid(. ~ continent) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_grid(. ~ continent) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+- Facets help us break up visualisations to their individual components
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  # facet_wrap is similar to facet_grid but presents the plots in a different manner
+  facet_wrap(. ~ continent) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## Next steps - Focusing on the aesthetics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_wrap(. ~ continent) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 4th layer - statistics
+
+- We can do some preliminary statistical analysis through the visualisations
+  = `geom_smooth` evaluates the relationship between variables
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_grid(. ~ continent) +
+  # geom_smooth allows us to plot the linear relationship between 2 variables
+  # method determines the modeling method, in this case linear model
+  # se determines whether we want to plot the standard error
+  # lwd states the line width
+  geom_smooth(color = "black", method = "lm", se = TRUE, lwd = 0.5) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 4th layer - statistics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_grid(. ~ continent) +
+  geom_smooth(color = "black", method = "lm", se = TRUE, lwd = 0.5) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 4th layer - statistics
+
+- We can do some preliminary statistical analysis through the visualisations
+  = `geom_smooth` evaluates the relationship between variables
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_grid(. ~ continent) +
+  geom_smooth(color = "black", method = 'loess', se = TRUE, lwd = 0.5) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 4th layer - statistics
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point(alpha = 0.5, size = 2) +
+  facet_grid(. ~ continent) +
+  geom_smooth(color = "black", method = 'loess', se = TRUE, lwd = 0.5) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 5th layer - coordinates
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 5th layer - coordinates
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  scale_x_log10() + # Rescale the axis
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 5th layer - coordinates
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  scale_x_log10() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 6th layer - themes
+
+- `ggthemes` allow us to quickly get certain visualisations using themes
+- Check out the Examples [here](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)
+
+```{r, eval = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  theme_solarized() + # Add Theme
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 6th layer - themes
+
+- Solarized theme, `theme_solarized()`
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  theme_solarized() + # Add Theme
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "Tracking the relationship between GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+```
+
+## 6th layer - themes
+
+- Wall Street Journal theme, `theme_wsj()`
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  theme_wsj(base_size = 8) +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       caption = "Source: gapminder dataset") +
+  ggtitle("GDP per capita and Life Expectancy")
+```
+
+## 6th layer - themes
+
+- FiveThirtyEight theme, `theme_fivethirtyeight()`
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  theme_fivethirtyeight() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       caption = "Source: gapminder dataset") +
+  ggtitle("GDP per capita and Life Expectancy")
+```
+
+## 6th layer - themes
+
+- The Economist theme, `theme_economist_white()`
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+  geom_point() +
+  theme_economist_white() +
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       caption = "Source: gapminder dataset") +
+  ggtitle("GDP per capita and Life Expectancy")
+```
+
+## Adding Interactivity with `plotly`
+
+- Turn a ggplot into an interactive graph
+
+```{r, eval = FALSE}
+plot <- gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) + 
+  # Size denotes the population size
+  geom_point(alpha = 0.5) + 
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+ggplotly(plot)
+```
+
+## Adding Interactivity with `plotly`
+
+```{r, echo = FALSE}
+plot <- gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) + 
+  # Size denotes the population size
+  geom_point(alpha = 0.5) + 
+  labs(x = "GDP per capita",
+       y = "Life Expectancy",
+       title = "GDP per capita and Life Expectancy",
+       caption = "Source: gapminder dataset")
+ggplotly(plot, text = ~country, hoverinfo = "text")
+```
+
+## Adding Interactivity with `plotly`
+
+```{r warning=FALSE}
+gapminder %>%
+  plot_ly(x = ~gdpPercap, y = ~lifeExp, size = ~pop, 
+          color = ~continent, frame = ~year, text = ~country,
+          hoverinfo = "text", type = 'scatter', mode = 'markers') %>%
+  layout(xaxis = list(type = "log"))
+```
+
+## Univariate Plots
+
+- Use a Histogram or a variation of a histogram for single variable
+
+```{r, eval = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_histogram() +
+  labs(x = "life expectancy",
+       y = "frequency",
+       title = "Histogram of global life expectancy in 2007")
+```
+
+## Univariate Plots
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_histogram() +
+  labs(x = "life expectancy",
+       y = "frequency",
+       title = "Histogram of global life expectancy in 2007")
+```
+
+## Univariate Plots
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_area(stat = "bin") +
+  labs(x = "life expectancy",
+       y = "frequency",
+       title = "Histogram of global life expectancy in 2007")
+```
+
+## Univariate Plots
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_density(kernel = "gaussian") +
+  labs(x = "life expectancy",
+       y = "frequency",
+       title = "Histogram of global life expectancy in 2007")
+```
+
+## Univariate Plots
+
+```{r, echo = FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_dotplot() +
+  labs(x = "life expectancy",
+       y = "frequency",
+       title = "Histogram of global life expectancy in 2007")
+```
+
+## Bivariate / Multivariate Plots
+
+- Depends on whether the variable is discrete or continuous
+
+  - Discrete can be boolean or categorical
+  - Boolean = Yes or No, TRUE or FALSE
+  - Categorical = Singapore, Hong Kong, Japan
+  - Continuous = income / age / area
+  
+## Bivariate / Multivariate Plots
+
+For 1 discrete and 1 continuous, use:
+
+- `geom_col()`
+- `geom_boxplot()`
+
+## Bivariate / Multivariate Plots
+
+For 2 discrete, use:
+
+- `geom_count()`
+
+## Bivariate / Multivariate Plots
+
+For 2 continuous, use:
+
+- `geom_line()`
+- `geom_area()`
+- `geom_step()`
+
+## Try it out!
+
+Use Coronavirus dataset found [here](https://github.com/gl2668/R_For_Data_Science/tree/master/data)
+
+
+
+
