@@ -22,7 +22,7 @@ The course content covers:
 
 - [Class 1](https://github.com/gl2668/R_For_Data_Science/blob/master/slides/lesson_1.html)
 - [Class 2 - Data Wrangling](https://github.com/gl2668/R_For_Data_Science/blob/master/slides/lesson_2.html)
-- [Class 2 - Data Visualisation]
+- [Class 2 - Data Visualisation](https://github.com/gl2668/R_For_Data_Science/blob/master/slides/lesson_2_visualize_data.html)
 
 **Practice Assignments:**
 
