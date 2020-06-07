@@ -12,7 +12,7 @@ The course content covers:
   - Data visualization with `ggplot2`
 - Class 3
   - Exploratory Data Analysis
-  - Dealing with Missing Data
+  - Dealing with Missing Data using `naniar`
 - Class 4
   - Function Writing with `purrr`
 - Class 5
