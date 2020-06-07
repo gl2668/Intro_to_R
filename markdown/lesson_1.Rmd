@@ -63,9 +63,10 @@ opts_chunk$set(fig.path="images/",
                warning=FALSE)
 ```
 
-## Course Introductions
+## Course Introductions {.smaller}
 
-- For Course materials: https://github.com/gl2668/R_For_Data_Science
+- **Course**
+  - For Course materials: https://github.com/gl2668/R_For_Data_Science
 - **Me**
   - Urban Planner & Data Analyst
   - Contact me via email: gl2668@columbia.edu
@@ -73,7 +74,7 @@ opts_chunk$set(fig.path="images/",
   - Roundtable of names, interests, and background
   - Why do you want to learn R?
   
-## What will be doing in this course?
+## What will be doing in this course? {.smaller}
 
 - Learning how to program / code in R!
 - Learning some basic statistics and tools for data analysis
@@ -122,14 +123,14 @@ opts_chunk$set(fig.path="images/",
 - Class 9:
   - Dashboard & Website Building with `shiny`
 
-## Let's Get Started
+## Let's Get Started {.smaller}
 
 - Download [R](https://courses.edx.org/courses/UTAustinX/UT.7.01x/3T2014/56c5437b88fa43cf828bff5371c6a924/)
 - Download [R Studio](https://rstudio.com/)
 - Open R Studio and Explore the Console
 - Helpful Reading: Hadley Wickham's [book](https://r4ds.had.co.nz/)
 
-## What is R?
+## What is R? {.smaller}
 
 - R is a programming language that is commonly used for data science
 - It is open-source, with a strong community of users and 14,837 packages available!
@@ -138,14 +139,14 @@ opts_chunk$set(fig.path="images/",
 - Less popular that Python but not second fiddle in my opinion (especially in the field of data science)
 - Rstudio is an arguably better IDE than Jupyter (IMO it is the Apple to the Microsoft)
 
-## What is R Studio?
+## What is R Studio? {.smaller}
 
 - R Studio is the IDE that allows you to code in R (and other languages like SQL and python)
   - IDE stands for Integrated Development Environment
   - Allows you to write functions and operations
   - Tidy and Visualize data
 
-## RStudio
+## RStudio {.smaller}
 
 - You have the Console, Environment, Files and Packages
 
@@ -153,7 +154,7 @@ opts_chunk$set(fig.path="images/",
 knitr::include_graphics("images/rstudio.png")
 ```
 
-## What is Markdown?
+## What is Markdown? {.smaller}
 
 - R Markdown is the tool for you to report and present your code / output
   - **File -> New File -> R Markdown -> Document -> HTML**
@@ -163,7 +164,7 @@ knitr::include_graphics("images/rstudio.png")
 knitr::include_graphics("images/markdown_what_is2.png")
 ```
 
-## Markdown Syntax
+## Markdown Syntax {.smaller}
 
 - Need to learn markdown syntax
 - Use the **cheat sheet** as a reference (google markdown cheat sheet)
@@ -175,19 +176,19 @@ knitr::include_graphics("images/markdown_what_is2.png")
 
 [Columbia U\](www.columbia\.edu)
 
-## R Markdown Cheat Sheet
+## R Markdown Cheat Sheet {.smaller}
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("images/rmarkdown-cheatsheet-2.0_p1.png")
 ```
 
-## R Markdown Cheat Sheet
+## R Markdown Cheat Sheet {.smaller}
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("images/rmarkdown-cheatsheet-2.0_p2.png")
 ```
 
-## Headers
+## Headers {.smaller}
 
 To create titles and headers, use leading hastags. The number of hashtags determines the header's level:
 
@@ -195,7 +196,7 @@ To create titles and headers, use leading hastags. The number of hashtags determ
 \#\# Second level header  
 \#\#\# Third level header  
 
-## Lists
+## Lists {.smaller}
 
 To make a bulleted list in Markdown, place each item on a new line after an asterisk and a space, like this:
 
@@ -209,7 +210,7 @@ You can make an ordered list by placing each item on a new line after a number f
 2\. item 2  
 3\. item 3
 
-## Embedding equations
+## Embedding equations {.smaller}
 
 You can also use the Markdown syntax to embed latex math equations into your reports. To embed an equation in its own centered equation block, surround the equation with two pairs of dollar signs like this,
 
@@ -219,7 +220,7 @@ To embed an equation inline, surround it with a single pair of dollar signs, lik
 
 All [standard Latex symbols](https://en.wikibooks.org/wiki/LaTeX/Mathematics) work.
 
-## Including R code inline and in chunks
+## Including R code inline and in chunks {.smaller}
 
 - R code can be included as chunk with 
 
@@ -231,7 +232,7 @@ All [standard Latex symbols](https://en.wikibooks.org/wiki/LaTeX/Mathematics) wo
 
 - Keyboard Shortcut to create a new chunk is `command` + `option` + `I`
 
-## Popular chunk options
+## Popular chunk options {.smaller}
 
 Three of the most popular chunk options are `echo`, `eval` and `results`.
 
@@ -241,11 +242,11 @@ Three of the most popular chunk options are `echo`, `eval` and `results`.
 
 - If `results = 'hide'`, R Markdown will not display the results of the code (but it will still run the code and display the code itself unless told otherwise).
 
-## Knitr
+## Knitr {.smaller}
 
 [knitr](https://yihui.name/knitr/) is an engine for dynamic report generation with R and is used to convert (or "knit") R Markdown files into the desired output format.
 
-## Other Output Formats
+## Other Output Formats {.smaller}
 
 - html_document
 - pdf_document
@@ -253,7 +254,7 @@ Three of the most popular chunk options are `echo`, `eval` and `results`.
 - beamer_presentation / slidy_presentation / ioslides_presentation
 - github_document
 
-## Packages and Dependencies
+## Packages and Dependencies {.smaller}
 
 - Installing packages
 
@@ -270,7 +271,7 @@ library(pacman)
 p_load(dplyr, ggplot2)
 ```
 
-## Core Packages in R
+## Core Packages in R {.smaller}
 
 - `ggplot2` (graphics)
 - `tibble` (data frames and tables)
@@ -280,7 +281,7 @@ p_load(dplyr, ggplot2)
 - `dplyr` (manipulate data)
 - `tidyverse` (All the above)
 
-## Importing / Reading in Data
+## Importing / Reading in Data {.smaller}
 
 - R comes with several free datasets that are easy to practice and learn with
 - For instance, `mtcars`
@@ -290,7 +291,7 @@ p_load(dplyr, ggplot2)
 head(mtcars)
 ```
 
-## Importing / Reading in Data
+## Importing / Reading in Data {.smaller}
 
 - Reading data from the web
 
@@ -301,7 +302,7 @@ flights <- fread("https://raw.githubusercontent.com/Rdatatable/data.table/master
 ```
 
 
-## Importing / Reading in Data
+## Importing / Reading in Data {.smaller}
 
 - Reading data from the Computer
 - Check working directory / Set working directory
@@ -314,7 +315,7 @@ getwd()
 setwd('/Users/geraldlee/Documents/Intro to R')
 ```
 
-## Importing / Reading in Data
+## Importing / Reading in Data {.smaller}
 
 - Reading data from the Computer
 
@@ -348,7 +349,7 @@ dim(flights) # Get the shape of the data
 colnames(flights) # Get the column names
 ```
 
-## Seeking help
+## Seeking help {.smaller}
 
 - Look at the help tab of your console
 
