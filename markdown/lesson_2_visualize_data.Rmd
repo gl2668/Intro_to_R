@@ -63,20 +63,21 @@ opts_chunk$set(fig.path="images/",
 ```
 
 
-## Let's Get Started
+## Let's Get Started {.smaller}
 
 - Start by Downloading the necessary packages
-- We will need `gapminder`, `ggthemes`, `plotly` and `tidyverse` 
+- We will need `gapminder`, `ggthemes`, `gganimate`,`plotly` and `tidyverse` 
   - The main package we are using is `ggplot2` but that is in the `tidyverse` suite
+  - You will need to also download `gifski` if it is the first time loading `gganimate`
 
-## Load Libraries
+## Load Libraries {.smaller}
 
 ```{r}
 library(pacman)
-p_load(gapminder, ggthemes, plotly, tidyverse)
+p_load(gapminder, ggthemes, gganimate, gifski, plotly, tidyverse)
 ```
 
-## Data Visualisation with `ggplot2`
+## Data Visualisation with `ggplot2` {.smaller}
 
 - 3 key grammatical elements
   - **Data**: the dataset that is being plotted
@@ -84,31 +85,31 @@ p_load(gapminder, ggthemes, plotly, tidyverse)
   - **Geom**etries: the visual elements used for our data
   - Every ggplot2 plot has these 3 key components
 
-## Grammatical elements
+## Grammatical elements {.smaller}
 
 ```{r, echo=FALSE, out.width = "60%"}
 knitr::include_graphics("images/ggplotelements.png")
 ```
 
-## 1st Layer - the data
+## 1st Layer - the data {.smaller}
 
 ```{r}
 ggplot(gapminder)
 ```
 
-## 2nd layer - the aesthetics
+## 2nd layer - the aesthetics {.smaller}
 
 ```{r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp))
 ```
 
-## 3rd layer - the geometries
+## 3rd layer - the geometries {.smaller}
 
 ```{r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 ```
 
-## Next steps - Refining the visualisation
+## Next steps - Refining the visualisation {.smaller}
 
 - In the current scatterplot, we are visualizing 2 variables (bivariate)
   - We want to find out how `lifeExp` relates to `gdpPercap`
@@ -119,13 +120,13 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 ```
 
-## Next steps - Refining the visualisation
+## Next steps - Refining the visualisation {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 - Annotating with graphs labels
 
@@ -138,7 +139,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
@@ -149,7 +150,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 - Adding Colours to add another variable
 
@@ -164,7 +165,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
@@ -176,7 +177,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 - Adding Size to add another variable
 
@@ -192,7 +193,7 @@ gapminder %>%
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 ```{r, echo = FALSE}
 gapminder %>%
@@ -206,7 +207,7 @@ gapminder %>%
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 - Facets help us break up visualisations to their individual components
 
@@ -221,7 +222,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
@@ -233,7 +234,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 - Facets help us break up visualisations to their individual components
 
@@ -248,7 +249,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## Next steps - Focusing on the aesthetics
+## Next steps - Focusing on the aesthetics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
@@ -260,7 +261,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 4th layer - statistics
+## 4th layer - statistics {.smaller}
 
 - We can do some preliminary statistical analysis through the visualisations
   = `geom_smooth` evaluates the relationship between variables
@@ -280,7 +281,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 4th layer - statistics
+## 4th layer - statistics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
@@ -293,7 +294,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 4th layer - statistics
+## 4th layer - statistics {.smaller}
 
 - We can do some preliminary statistical analysis through the visualisations
   = `geom_smooth` evaluates the relationship between variables
@@ -309,7 +310,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 4th layer - statistics
+## 4th layer - statistics {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
@@ -322,7 +323,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 5th layer - coordinates
+## 5th layer - coordinates {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
@@ -333,7 +334,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 5th layer - coordinates
+## 5th layer - coordinates {.smaller}
 
 ```{r, eval = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
@@ -345,7 +346,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 5th layer - coordinates
+## 5th layer - coordinates {.smaller}
 
 ```{r, echo = FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
@@ -357,7 +358,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 6th layer - themes
+## 6th layer - themes {.smaller}
 
 - `ggthemes` allow us to quickly get certain visualisations using themes
 - Check out the Examples [here](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)
@@ -372,7 +373,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 6th layer - themes
+## 6th layer - themes {.smaller}
 
 - Solarized theme, `theme_solarized()`
 
@@ -386,7 +387,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
        caption = "Source: gapminder dataset")
 ```
 
-## 6th layer - themes
+## 6th layer - themes {.smaller}
 
 - Wall Street Journal theme, `theme_wsj()`
 
@@ -400,7 +401,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
   ggtitle("GDP per capita and Life Expectancy")
 ```
 
-## 6th layer - themes
+## 6th layer - themes {.smaller}
 
 - FiveThirtyEight theme, `theme_fivethirtyeight()`
 
@@ -414,7 +415,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
   ggtitle("GDP per capita and Life Expectancy")
 ```
 
-## 6th layer - themes
+## 6th layer - themes {.smaller}
 
 - The Economist theme, `theme_economist_white()`
 
@@ -428,7 +429,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
   ggtitle("GDP per capita and Life Expectancy")
 ```
 
-## Adding Interactivity with `plotly`
+## Adding Interactivity with `plotly` {.smaller}
 
 - Turn a ggplot into an interactive graph
 
@@ -445,7 +446,7 @@ plot <- gapminder %>%
 ggplotly(plot)
 ```
 
-## Adding Interactivity with `plotly`
+## Adding Interactivity with `plotly` {.smaller}
 
 ```{r, echo = FALSE}
 plot <- gapminder %>%
@@ -460,7 +461,7 @@ plot <- gapminder %>%
 ggplotly(plot, text = ~country, hoverinfo = "text")
 ```
 
-## Adding Interactivity with `plotly`
+## Adding Interactivity with `plotly` {.smaller}
 
 ```{r warning=FALSE}
 gapminder %>%
@@ -470,7 +471,23 @@ gapminder %>%
   layout(xaxis = list(type = "log"))
 ```
 
-## Univariate Plots
+## Adding Interactivity with `gganimate` {.smaller}
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~ continent) +
+  # gganimate functions
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+```
+
+
+## Univariate Plots {.smaller}
 
 - Use a Histogram or a variation of a histogram for single variable
 
@@ -485,7 +502,7 @@ gapminder %>%
        title = "Histogram of global life expectancy in 2007")
 ```
 
-## Univariate Plots
+## Univariate Plots {.smaller}
 
 ```{r, echo = FALSE}
 gapminder %>%
@@ -498,7 +515,7 @@ gapminder %>%
        title = "Histogram of global life expectancy in 2007")
 ```
 
-## Univariate Plots
+## Univariate Plots {.smaller}
 
 ```{r, echo = FALSE}
 gapminder %>%
@@ -511,7 +528,7 @@ gapminder %>%
        title = "Histogram of global life expectancy in 2007")
 ```
 
-## Univariate Plots
+## Univariate Plots {.smaller}
 
 ```{r, echo = FALSE}
 gapminder %>%
@@ -524,7 +541,7 @@ gapminder %>%
        title = "Histogram of global life expectancy in 2007")
 ```
 
-## Univariate Plots
+## Univariate Plots {.smaller}
 
 ```{r, echo = FALSE}
 gapminder %>%
@@ -537,7 +554,7 @@ gapminder %>%
        title = "Histogram of global life expectancy in 2007")
 ```
 
-## Bivariate / Multivariate Plots
+## Bivariate / Multivariate Plots {.smaller}
 
 - Depends on whether the variable is discrete or continuous
 
@@ -546,20 +563,20 @@ gapminder %>%
   - Categorical = Singapore, Hong Kong, Japan
   - Continuous = income / age / area
   
-## Bivariate / Multivariate Plots
+## Bivariate / Multivariate Plots {.smaller}
 
 For 1 discrete and 1 continuous, use:
 
 - `geom_col()`
 - `geom_boxplot()`
 
-## Bivariate / Multivariate Plots
+## Bivariate / Multivariate Plots {.smaller}
 
 For 2 discrete, use:
 
 - `geom_count()`
 
-## Bivariate / Multivariate Plots
+## Bivariate / Multivariate Plots {.smaller}
 
 For 2 continuous, use:
 
@@ -567,7 +584,7 @@ For 2 continuous, use:
 - `geom_area()`
 - `geom_step()`
 
-## Try it out!
+## Try it out! {.smaller}
 
 Use Coronavirus dataset found [here](https://github.com/gl2668/R_For_Data_Science/tree/master/data)
 
