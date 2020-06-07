@@ -5,9 +5,11 @@ The slides and content are a consolidation of lessons and courses that I have pi
 
 The course content covers:
 - Basic R Programming
-- Importing Data
+- Importing and Writing Data
 - Data wrangling and manipulation with `dplyr`
 - Data visualization with `ggplot2`
+- Exploratory Data Analysis
+- Dealing with Missing Data
 - Function Writing with `purrr`
 - Basic Statistical Analysis with `psych` and base R
 - Basic Machine Learning Concepts with `caret`
