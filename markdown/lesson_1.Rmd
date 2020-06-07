@@ -63,16 +63,83 @@ opts_chunk$set(fig.path="images/",
                warning=FALSE)
 ```
 
+## Course Introductions
+
+- For Course materials: https://github.com/gl2668/R_For_Data_Science
+- **Me**
+  - Urban Planner & Data Analyst
+  - Contact me via email: gl2668@columbia.edu
+- **You**
+  - Roundtable of names, interests, and background
+  - Why do you want to learn R?
+  
+## What will be doing in this course?
+
+- Learning how to program / code in R!
+- Learning some basic statistics and tools for data analysis
+- Gain practical skills for career / research practice
+
+## Why learn Data Science & R? {.smaller}
+
+- In-demand skill
+- Format of Data is changing and traditional tools like Microsoft Excel is insufficient for certain tools and functions
+- Easy to carry out functions like Webscrapping, Machine Learning, Statistical Analysis and Web / Dashboard building
+
+## Course Outline {.smaller}
+
+- Class 1:
+  - Setting Up
+  - RMarkdown
+  - Reading and Writing Data
+- Class 2:
+  - Introduction to the `Tidyverse`
+  - Simple data manipulation with `dplyr`
+  - Data visualization with `ggplot2`
+- Class 3:
+  - Basic Data Analysis Process
+  - Exploratory Data Analysis
+  - Dealing with Missing Data
+  - A simple hacking project
+  
+## Course Outline {.smaller}
+
+- Class 4:
+  - Function Writing with `purrr`
+  - Some Statistical Analysis with `psych` and base R
+- Class 5:
+  - Statistical Analysis
+- Class 6:
+  - Basic Machine Learning Concepts with `caret`
+
+## Course Outline {.smaller}
+
+- Class 7:
+  - Working with strings using `stringr` and `rebus` packages
+  - Simple NLP using `tidytext`, `tm` and `wordcloud`
+- Class 8:
+  - Webscrapping with `rvest`
+  - API with `httr`
+- Class 9:
+  - Dashboard & Website Building with `shiny`
 
 ## Let's Get Started
 
-- Download [R](https://courses.edx.org/courses/UTAustinX/UT.7.01x/3T2014/56c5437b88fa43cf828bff5371c6a924/) & [R Studio](https://rstudio.com/)
+- Download [R](https://courses.edx.org/courses/UTAustinX/UT.7.01x/3T2014/56c5437b88fa43cf828bff5371c6a924/)
+- Download [R Studio](https://rstudio.com/)
 - Open R Studio and Explore the Console
 - Helpful Reading: Hadley Wickham's [book](https://r4ds.had.co.nz/)
 
 ## What is R?
 
 - R is a programming language that is commonly used for data science
+- It is open-source, with a strong community of users and 14,837 packages available!
+- It is free to use unlike Matlab, SPSS, Stata
+- R is an easy first programming language to learn
+- Less popular that Python but not second fiddle in my opinion (especially in the field of data science)
+- Rstudio is an arguably better IDE than Jupyter (IMO it is the Apple to the Microsoft)
+
+## What is R Studio?
+
 - R Studio is the IDE that allows you to code in R (and other languages like SQL and python)
   - IDE stands for Integrated Development Environment
   - Allows you to write functions and operations
@@ -215,11 +282,41 @@ p_load(dplyr, ggplot2)
 
 ## Importing / Reading in Data
 
+- R comes with several free datasets that are easy to practice and learn with
+- For instance, `mtcars`
+- To find out all the inbuilt dataset, just type `data()` in the console
+
+```{r}
+head(mtcars)
+```
+
+## Importing / Reading in Data
+
+- Reading data from the web
+
 ```{r Read in data}
 # Using the data.table package to read files
 p_load(data.table)
 flights <- fread("https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv")
 ```
+
+
+## Importing / Reading in Data
+
+- Reading data from the Computer
+- Check working directory / Set working directory
+
+```{r}
+# Check working directory
+getwd()
+
+# Set working directory
+setwd('/Users/geraldlee/Documents/Intro to R')
+```
+
+## Importing / Reading in Data
+
+- Reading data from the Computer
 
 ```{r}
 # Using the readxl package to read in Excel files
@@ -228,6 +325,11 @@ rawData <- read_excel(path = "data/data_example1.xlsx", # Path to file
                     sheet = 2, # We want the second sheet
                     skip = 1, # Skip the first row
                     na = "NA") # Missing characters are "NA"
+```
+
+```{r}
+# Or fread
+rawData <- fread("data/data_example1.xlsx")
 ```
 
 ## Take a Look at the Data {.smaller}
@@ -258,7 +360,6 @@ colnames(flights) # Get the column names
 help(dplyr)
 ```
 
-
 ## Data Science Flow Chart {.smaller}
 
 ```{r, echo=FALSE, out.width = "100%"}
@@ -269,15 +370,6 @@ knitr::include_graphics("images/datascience_progress.png")
 - This course will focus on Tidying, Transforming and some Visualisation
 - Not a full-fledged Statistics or Machine Learning Course
 
-## Why learn Data Science & R? {.smaller}
-
-- In-demand skill
-- Format of Data is changing and traditional tools like Microsoft Excel is insufficient for certain tools and functions
-- Easy to carry out functions like Webscrapping, Machine Learning, Statistical Analysis and Web / Dashboard building
-- R is an easy first programming language to learn
-- R is free, open source, 14,837 packages available
-- Rstudio is an arguably better IDE than Jupyter (IMO it is the Apple to the Microsoft)
-
 ## Possible Projects {.smaller}
 
 - Websites like https://nsgrantham.shinyapps.io/tidytuesdayrocks/
@@ -286,25 +378,3 @@ knitr::include_graphics("images/datascience_progress.png")
 - Real Estate Investment Analysis like https://phillyo.shinyapps.io/intelligentsia/
 - Machine Learning for Prediction / Classification
 
-## What will we cover next? {.smaller}
-
-- Class 2:
-  - Simple data manipulation with `dplyr`
-  - Data visualization with `ggplot2`
-- Class 3:
-  - Function Writing with `purrr`
-  - Some Statistical Analysis with `psych` and base R
-- Class 4:
-  - Statistical Analysis (continued)
-  - Basic Machine Learning Concepts with `caret`
-  
-## What will we cover next? {.smaller}
-
-- Class 5:
-  - Working with strings using `stringr` and `rebus` packages
-  - Simple NLP using `tidytext`, `tm` and `wordcloud`
-- Class 6:
-  - Webscrapping with `rvest`
-  - API with `httr`
-- Class 7:
-  - Dashboard & Website Building with `shiny`
