@@ -4,20 +4,30 @@ This is the github repository for a short introductory course to R and how to us
 The slides and content are a consolidation of lessons and courses that I have picked up over my masters degree at Columbia University.
 
 The course content covers:
-- Basic R Programming
-- Importing and Writing Data
-- Data wrangling and manipulation with `dplyr`
-- Data visualization with `ggplot2`
-- Exploratory Data Analysis
-- Dealing with Missing Data
-- Function Writing with `purrr`
-- Basic Statistical Analysis with `psych` and base R
-- Basic Machine Learning Concepts with `caret`
-- Working with strings using `stringr` and `rebus` packages
-- Simple NLP using `tidytext`, `tm` and `wordcloud`
-- Webscrapping with `rvest`
-- API with `httr`
-- Dashboard & Website Building with `shiny`
+- Class 1
+  - Basic R Programming
+  - Importing and Writing Data
+- Class 2
+  - Data wrangling and manipulation with `dplyr`
+  - Data visualization with `ggplot2`
+- Class 3
+  - Exploratory Data Analysis
+  - Dealing with Missing Data
+- Class 4
+  - Function Writing with `purrr`
+- Class 5
+  - Basic Statistical Analysis with `psych` and base R
+  - Regression Analysis
+- Class 6
+  - Basic Machine Learning Concepts with `caret`
+- Class 7
+  - Working with strings using `stringr` and `rebus` packages
+  - Simple NLP using `tidytext`, `tm` and `wordcloud`
+- Class 8
+  - Webscrapping with `rvest`
+  - API with `httr`
+- Class 9
+  - Dashboard & Website Building with `shiny`
 
 # Course Content
 **Slides:**
