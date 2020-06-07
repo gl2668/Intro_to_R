@@ -29,3 +29,5 @@ The course content covers:
 **Practice Assignments:**
 
 **Datasets:**
+
+- [Covid-19 dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/covid.csv)
