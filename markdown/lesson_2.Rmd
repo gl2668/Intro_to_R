@@ -63,14 +63,14 @@ opts_chunk$set(fig.path="images/",
 ```
 
 
-## Let's Get Started
+## Let's Get Started {.smaller}
 
 - [Cheat Sheet for this class](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 - Start by Downloading the necessary packages
 - We will need `dplyr`, `ggplot2`, `gapminder` and `tidyr`
   - Can you remember how we load libraries?
 
-## Load Libraries
+## Load Libraries {.smaller}
 
 - We will be using the gapminder dataset
   - Remember you can do `help()` to find out more about the dataset
@@ -92,7 +92,7 @@ library(pacman)
 p_load(dplyr, ggplot2, gapminder, tidyr)
 ```
 
-## Recap of Basic R Verbs
+## Recap of Basic R Verbs {.smaller}
 
 ```{r}
 # Print the first few rows of the data
@@ -104,7 +104,7 @@ head(gapminder)
 dim(gapminder)
 ```
 
-## Data Transformation with `dplyr`
+## Data Transformation with `dplyr` {.smaller}
 
 - `filter()` - remove rows according to a criteria
 - `select()` - select columns by name
@@ -112,7 +112,7 @@ dim(gapminder)
 - `arrange()` - sort data by columns
 - `summarize()` - compute summary statistics
 
-## THE PIPE %>%
+## THE PIPE %>% {.smaller}
 
 - `%>%` is called the pipe operator
 - It helps us to pass on a dataframe to a certain function / operation
@@ -122,7 +122,7 @@ gapminder %>%
   head(3)
 ```
 
-## Filtering Data
+## Filtering Data {.smaller}
 
 - Row-wise filtering
   - Logical filtering
@@ -134,7 +134,7 @@ gapminder %>%
   filter(country == 'Australia' & year == 2007)
 ```
 
-## Filtering Data
+## Filtering Data {.smaller}
 
 - Across multiple columns
 
@@ -145,13 +145,13 @@ gapminder %>%
          pop > 80000000)
 ```
 
-## Try out `filter`
+## Try out `filter` {.smaller}
 
 - Now you try!
 - Can you filter the data for either 'Singapore' or 'Hong Kong, China' and for the years after 2000
 - Can you filter the data for 'Oceania' continent but don't include Australia
 
-## Try out `filter`
+## Try out `filter` {.smaller}
 
 - Did you get it right?
 
@@ -161,7 +161,7 @@ gapminder %>%
          year > 2000)
 ```
 
-## Try out `filter`
+## Try out `filter` {.smaller}
 
 - Did you get it right?
 
@@ -171,7 +171,7 @@ gapminder %>%
          country != 'Australia') %>% head(4)
 ```
 
-## Selecting Columns
+## Selecting Columns {.smaller}
 
 ```{r}
 # Select single column
@@ -180,7 +180,7 @@ gapminder %>%
   head(5)
 ```
 
-## Selecting Multiple Columns
+## Selecting Multiple Columns {.smaller}
 
 ```{r}
 # Select 2 columns
@@ -189,7 +189,7 @@ gapminder %>%
   head()
 ```
 
-## Selecting Multiple Columns
+## Selecting Multiple Columns {.smaller}
 
 ```{r}
 # Select all but Year
@@ -198,33 +198,33 @@ gapminder %>%
   head(3)
 ```
 
-## Selecting columns by name
+## Selecting columns by name {.smaller}
 
 ```{r}
 # select by column name
 gapminder['continent'] %>% head(3)
 ```
 
-## Selecting columns by index
+## Selecting columns by index {.smaller}
 
 ```{r}
 # 2nd column from the left
 gapminder[, 2] %>% head(3)
 ```
 
-## Selecting rows by index
+## Selecting rows by index {.smaller}
 
 ```{r}
 # select first 5 rows
 gapminder[1:5, ]
 ```
 
-## Selecting Columns
+## Selecting Columns {.smaller}
 
 - Now you try!
 - Select only the `year` and `lifeExp` columns for the first 3 rows of the gapminder data
 
-## Try out `select`
+## Try out `select` {.smaller}
 
 - Did you get it right?
 
@@ -234,7 +234,7 @@ gapminder %>%
   head(3)
 ```
 
-## Select
+## Select {.smaller}
 
 + `starts_with()`: starts with a prefix
 + `ends_with()`: ends with a prefix
@@ -244,7 +244,7 @@ gapminder %>%
 + `one_of()`: variables in character vector.
 + `everything()`: all variables.
 
-## Use `mutate` to create new columns
+## Use `mutate` to create new columns {.smaller}
 
 - Calculate a new variable based on other variables
   - E.g. we want to get GDP (in million), which is `pop` * `gdpPercap` / 1000000
@@ -257,11 +257,11 @@ gapminder %>%
   head()
 ```
 
-## Try out `mutate`
+## Try out `mutate` {.smaller}
 
 - Can you create a new column called `gdpPercap_rounded` that rounds gdpPercap to the nearest whole number?
 
-## Try out `mutate`
+## Try out `mutate` {.smaller}
 
 - Did you get it?
 
@@ -271,7 +271,7 @@ gapminder %>%
   head(3)
 ```
 
-## Use `summarize` to calculate data summaries such as means and standard deviations 
+## Use `summarize` to calculate data summaries such as means and standard deviations {.smaller}
 
 There are several useful functions that can be used with `summarize()`:
 
@@ -282,7 +282,7 @@ There are several useful functions that can be used with `summarize()`:
 - Count: `n()`, `n_distinct()`
 - Logical: `any()`, `all()`
 
-## Use `summarize` and `filter` to calculate the average lifeExp globally
+## Use `summarize` and `filter` to calculate the average lifeExp globally {.smaller}
 
 ```{r}
 gapminder %>%
@@ -290,7 +290,7 @@ gapminder %>%
   summarize(mean(lifeExp))
 ```
 
-## Use `summarize`, filter and `group_by` to calculate the mean lifeExp per country across time
+## Use `summarize`, filter and `group_by` to calculate the mean lifeExp per country across time {.smaller}
 
 ```{r}
 gapminder %>%
@@ -299,11 +299,11 @@ gapminder %>%
   head()
 ```
 
-## Try out `summarize`
+## Try out `summarize` {.smaller}
 
 - Find out how the average `gdpPercap` of the ENTIRE world has increased or decreased over time
 
-## Try out `summarize`
+## Try out `summarize` {.smaller}
 
 ```{r}
 gapminder %>%
@@ -311,7 +311,7 @@ gapminder %>%
   summarize(mean(gdpPercap))
 ```
 
-## Using `distinct` to find unique values
+## Using `distinct` to find unique values {.smaller}
 
 - This is useful for removing duplicated rows or multiple identical rows
 
@@ -321,7 +321,7 @@ gapminder %>%
   distinct(continent)
 ```
 
-## Using `distinct` and `count` to calculate number of unique values
+## Using `distinct` and `count` to calculate number of unique values {.smaller}
 
 - We can also use it in this way to count the number of unique values in the column, e.g. countries
 
@@ -332,7 +332,7 @@ gapminder %>%
   count()
 ```
 
-## Use `table` to tabulate / count unique values 
+## Use `table` to tabulate / count unique values {.smaller}
 
 ```{r}
 # Find out how many countries are there in each continent
@@ -343,7 +343,7 @@ gapminder %>%
   table()
 ```
 
-## Use `prop.table` to tabulate / count unique values 
+## Use `prop.table` to tabulate / count unique values {.smaller}
 
 - `prop.table()` gives us the percentage instead of the count
 
@@ -358,13 +358,13 @@ gapminder %>%
   round(2)
 ```
 
-## Another way to do this is to use `unique`
+## Another way to do this is to use `unique` {.smaller}
 
 ```{r}
 unique(gapminder['continent'])
 ```
 
-## Sorting the Data
+## Sorting the Data {.smaller}
 
 - Sort data using the `arrange` verb
 
@@ -374,7 +374,7 @@ gapminder %>%
   arrange(gdpPercap) %>% head()
 ```
 
-## Sorting the Data
+## Sorting the Data {.smaller}
 
 ```{r}
 # To change to decreasing, use desc
@@ -382,11 +382,11 @@ gapminder %>%
   arrange(desc(gdpPercap)) %>% head()
 ```
 
-## Try out `sort`
+## Try out `sort` {.smaller}
 
 - Sort the data in descending order of `pop`
 
-## Try out `sort`
+## Try out `sort` {.smaller}
 
 ```{r}
 gapminder %>%
@@ -394,7 +394,7 @@ gapminder %>%
   head()
 ```
 
-## Reshaping Data
+## Reshaping Data {.smaller}
 
 - Not as commonly used but still important to know incase you need to change the format of the data
 
@@ -402,14 +402,14 @@ gapminder %>%
 knitr::include_graphics("images/reshape.png")
 ```
 
-## Reshape the data with `spread`
+## Reshape the data with `spread` {.smaller}
 
 - `spread` transforms the data from long format to wide format
 - There are 2 parameters in the `spread` verb
   - the first is the key (the column values to convert into multiple columns)
   - the second is the value (the single column values to covert to multiple columns' values)
 
-## Reshape the data with `spread`
+## Reshape the data with `spread` {.smaller}
 
 Before:
 
@@ -418,7 +418,7 @@ gapminder %>%
   select(country, year, pop) %>% head() # year is the key, pop is the value
 ```
 
-## Reshape the data with `spread`
+## Reshape the data with `spread` {.smaller}
 
 After:
 
@@ -429,12 +429,12 @@ gapminder %>%
   head()
 ```
 
-## Reshape the data with `gather`
+## Reshape the data with `gather` {.smaller}
 
 - `gather` does the reverse of spread
 - Check out the documentation of the verb or look at the cheatsheet for example
 
-## Join columns together with `unite`
+## Join columns together with `unite` {.smaller}
 
 - Useful for joining string columns together
   - col states the name of the new merged column
@@ -447,12 +447,12 @@ gapminder %>%
   head()
 ```
 
-## Split columns with `separate`
+## Split columns with `separate` {.smaller}
 
 - `separate` does the opposite of `unite`
 - Check out the documentation of the verb or look at the cheatsheet for example
 
-## Joining and merging data together
+## Joining and merging data together {.smaller}
 
 ```{r}
 # Download red wine and white wine dataset
@@ -461,7 +461,7 @@ red_wine <- fread('https://archive.ics.uci.edu/ml/machine-learning-databases/win
 white_wine <- fread('https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv', sep = ';') %>% head(100) %>% mutate(wine = "white")
 ```
 
-## Joining and merging datasets together
+## Joining and merging datasets together {.smaller}
 
 - Let's say we have 2 datasets that we want to merge together
 
@@ -469,7 +469,7 @@ white_wine <- fread('https://archive.ics.uci.edu/ml/machine-learning-databases/w
 red_wine %>% head(3)
 ```
 
-## Joining and merging datasets together
+## Joining and merging datasets together {.smaller}
 
 - Let's say we have 2 datasets that we want to merge together
 
@@ -477,7 +477,7 @@ red_wine %>% head(3)
 white_wine %>% head(3)
 ```
 
-## Joining and merging datasets together
+## Joining and merging datasets together {.smaller}
 
 - To join them by row, i.e join to the bottom, we will use `rbind`
   - To join by column, we will use `cbind`
@@ -486,7 +486,7 @@ white_wine %>% head(3)
 rbind(red_wine, white_wine)
 ```
 
-## Joining and merging datasets
+## Joining and merging datasets {.smaller}
 
 We can also use:
 
@@ -497,13 +497,13 @@ We can also use:
 - `full_join` - when you want all rows
 - `anti_join`
 
-## Recap of `dplyr`
+## Recap of `dplyr` {.smaller}
 
 ```{r, echo=FALSE, out.width = "60%"}
 knitr::include_graphics("images/recap.png")
 ```
 
-## Bonus {.smaller}
+## Bonus {.smaller} {.smaller}
 
 - Make fancy tables with kableExtra
 
