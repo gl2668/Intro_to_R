@@ -1,0 +1,286 @@
+---
+title: "Class 3 - EDA and Missing Data"
+subtitle: R for Data Science
+author: "Gerald Lee"
+date: "June 7, 2020"
+output:
+  ioslides_presentation:
+    incremental: no
+    keep_md: yes
+    smaller: no
+  slidy_presentation:
+    incremental: no
+mode: selfcontained
+always_allow_html: yes
+---
+
+```{r packages, message = FALSE, warning = FALSE, echo=FALSE}
+# For installing necessary packages
+```
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+
+# A Prefix nulling hook.
+
+# Make sure to keep the default for normal processing.
+default_output_hook <- knitr::knit_hooks$get("output")
+
+# Output hooks handle normal R console output.
+knitr::knit_hooks$set( output = function(x, options) {
+
+  comment <- knitr::opts_current$get("comment")
+  if( is.na(comment) ) comment <- ""
+  can_null <- grepl( paste0( comment, "\\s*\\[\\d?\\]" ),
+                     x, perl = TRUE)
+  do_null <- isTRUE( knitr::opts_current$get("null_prefix") )
+  if( can_null && do_null ) {
+    # By default R print output aligns at the right brace.
+    align_index <- regexpr( "\\]", x )[1] - 1
+    # Two cases: start or newline
+    re <- paste0( "^.{", align_index, "}\\]")
+    rep <- comment
+    x <- gsub( re, rep,  x )
+    re <- paste0( "\\\n.{", align_index, "}\\]")
+    rep <- paste0( "\n", comment )
+    x <- gsub( re, rep,  x )
+  }
+
+  default_output_hook( x, options )
+
+})
+
+knitr::opts_template$set("kill_prefix"=list(comment=NA, null_prefix=TRUE))
+
+
+## Normal Setup From Here
+library(knitr)
+
+opts_chunk$set(fig.path="images/",
+               cache.path="cache/",
+               cache=TRUE,
+               echo=TRUE,
+               message=FALSE,
+               warning=FALSE)
+```
+
+## Required Libraires {.smaller}
+
+- `tidyverse`: Data Wrangling & Visualisation
+- `psych` & `ggcorrplot`: EDA & Descriptive Stats
+- `naniar`: To deal with Missing Data
+
+```{r}
+library(pacman)
+p_load(ggcorrplot, naniar, psych, tidyverse)
+```
+  
+## What is EDA? {.smaller}
+
+- EDA stands for Exploratory Data Analysis
+- It is an important part of every data analysis project
+  - It is **a means to generate questions about the data**
+  - Look for patterns / initial answers by visualising, transforming and modelling the data
+  - Use what you learn to refine your questions and generate new questions
+- The **Goal of EDA** is to:
+  - Develop a clearer understanding & familiarity of the data
+  - What kind of variation occurs within my variables?
+  - What type of covariation occurs between my variables?
+
+## Variation of Variables {.smaller}
+
+- A **variable** refers to an observation or quality that we are measuring or understanding
+  - E.g. the weight of a person, the speed of a car, the eye colour of a person, gender
+- **Variation of variables** looks at the tendency of these variables to change from one measurement to another
+  - How does the height of each student vary in a given classroom / how does the daily temperature change in a year?
+- Every variable has its own pattern of variation, which can provide interesting information
+- The best way to understand this pattern is to visualize the distribution of the variable's values
+
+## Variation of Variables {.smaller}
+
+- To visualize the distribution of the variable's values, we need to first determine if the variable is discrete (categorical) or continuous
+- Discrete variables can only take on a limited set of values, continuous variables can take on an "infinite" set of values
+  - **Discrete** <- Gender, Language, Dog breed, Season, etc
+  - **Continuous** <- Speed, Height, Age, Income, etc
+- Can you think of some other examples?
+
+## How do you determine the type of variable? {.smaller}
+
+```{r}
+summary(diamonds[, 1:7])
+```
+
+## How do you determine the type of variable? {.smaller}
+
+```{r}
+# Discrete
+unique(diamonds$cut)
+```
+
+```{r}
+# Continuous
+length(unique(diamonds$carat))
+```
+
+## Variation of Discrete Variables {.smaller}
+
+- Use `geom_bar()`, with only one aesthetic
+
+```{r}
+# Tall bars denote the most common values of a variable, vice versa
+ggplot(diamonds, aes(x = cut)) + geom_bar() + labs(title = "Distribution of Diamonds type")
+```
+
+## Variation of Continuous Variables {.smaller}
+
+- Use `geom_histogram()`, with only one aesthetic
+
+```{r}
+# Areas with missing bars reveal values with very low counts
+ggplot(diamonds, aes(x = carat)) + geom_histogram(bins = 100) + labs(title = "Distribution of Carat")
+```
+
+## Variation of Continuous Variables {.smaller}
+
+- To overlay multiple histograms use `geom_freqpoly()`
+
+```{r}
+diamonds %>% filter(carat <= 3) %>% 
+  ggplot(aes(x = carat, colour = cut)) + geom_freqpoly(bins = 50) + labs(title = "Distribution of Carat")
+```
+
+## What are you looking for? {.smaller}
+
+- Which values are the most common? Why?
+- Which values are rare? Why? 
+- Does that match your expectations?
+- Do you notice unusual patterns? 
+- What might explain them?
+
+## Covariation {.smaller}
+
+- Covariation describes the **behaviour between variables**
+- Refers to the tendency for the values of 2 or more variables to change in a way that relates to each other
+  - E.g. `height` and `weight` tends to exhibit covariation since the taller you are the heavier you are
+  - Another example is `Age` and `Income` where you tend to make more money the older you get
+
+## Visualising covariation with a boxplot {.smaller}
+
+- Covariation between **discrete** & **continuous** variable
+
+```{r}
+ggplot(mpg, aes(x = class, y = hwy)) + geom_boxplot() + 
+  labs(title = "Highway Miles Per Gallon ~ Class Type of Car") +
+  coord_flip()
+```
+
+## Visualising covariation with a boxplot {.smaller}
+
+- For **2 discrete variables**, look at the count of the variables
+
+```{r}
+table(diamonds$color)
+table(diamonds$cut)
+```
+
+## Visualising covariation with a boxplot {.smaller}
+
+```{r}
+diamonds %>% 
+  count(color, cut) %>% 
+  ggplot(aes(x = color, y = cut)) + geom_tile(aes(fill = n))
+```
+
+## Visualising covariation with a boxplot {.smaller}
+
+- For **2 continuous variables**, use a scatter plot
+
+```{r}
+ggplot(diamonds, aes(carat, price)) + geom_point(alpha = 0.1, colour = "red")
+```
+
+## Covariation between variables {.smaller}
+
+```{r}
+# Using the `pairs()` function
+pairs(women, lower.panel=NULL)
+```
+
+## Covariation between variables {.smaller}
+
+```{r}
+my_cols <- c("#00AFBB", "#E7B800", "#FC4E07")  
+pairs(iris[,1:4], pch = 19,  cex = 0.5,
+      col = my_cols[iris$Species], lower.panel=NULL)
+```
+
+## Covariation between variables {.smaller}
+
+```{r}
+pairs.panels(iris[,-5], method = "pearson", # correlation method
+             hist.col = "#00AFBB", density = TRUE,  # show density plots
+             ellipses = TRUE) # show correlation ellipses
+```
+
+## Covariation between variables {.smaller}
+
+```{r, message=FALSE}
+# Using `ggcorrplot` package
+ggcorrplot(cor(mtcars), p.mat = cor_pmat(mtcars), hc.order=TRUE, type='lower')
+```
+
+## Detecting Patterns {.smaller}
+
+- Patterns in the data provide clues about possible relationships
+- If a systemic relationship exists between 2 variables, it would appear as a pattern in the data
+  - Is this pattern due to coincidence?
+  - Can you describe the relationship implied by the pattern?
+  - How strong is the relationship implied by the pattern?
+  - What other variables might affect this relationship?
+  - Does the relationship change if you look at individual subgroups of the data?
+
+## Detecting Patterns {.smaller}  
+
+- A dataset on the eruption of 2 geysers in Yellowstone National Park
+
+```{r}
+pairs(faithful, lower.panel=NULL)
+```
+
+## Detecting Patterns {.smaller}  
+
+- A dataset on the arrests per 100,000 residents in America
+
+```{r}
+pairs(USArrests, lower.panel=NULL)
+```
+
+## Dealing with Missing Data {.smaller}
+
+- Datasets are not **clean** all the time
+- Most of the times, you encounter missing data, `is.na()`
+- You can deal with missing data in different ways
+  - Interpolate the data or remove them
+- One package that can help you explore missing data is the `naniar` package
+  - Visualize your missing data
+
+## Dealing with Missing Data {.smaller}
+
+```{r}
+# Use `vis_miss` to visualize missing data
+vis_miss(airquality)
+```
+
+## Dealing with Missing Data {.smaller}
+
+```{r}
+# Use `gg_vis_miss` to visualize missing data
+gg_miss_var(airquality)
+```
+
+
+## Exploring Missing Mechanisms {.smaller}
+
+```{r}
+# Use `geom_miss_point()`
+ggplot(airquality, aes(x = Ozone, y = Solar.R)) + geom_miss_point()
+```
