@@ -66,12 +66,12 @@ opts_chunk$set(fig.path="images/",
 ## Required Libraires {.smaller}
 
 - `tidyverse`: Data Wrangling & Visualisation
-- `psych` & `ggcorrplot`: EDA & Descriptive Stats
+- `DataExplorer`, `ggcorrplot` & `psych`: EDA & Descriptive Stats
 - `naniar`: To deal with Missing Data
 
 ```{r}
 library(pacman)
-p_load(ggcorrplot, naniar, psych, tidyverse)
+p_load(DataExplorer, ggcorrplot, naniar, psych, tidyverse)
 ```
   
 ## What is EDA? {.smaller}
@@ -82,9 +82,31 @@ p_load(ggcorrplot, naniar, psych, tidyverse)
   - Look for patterns / initial answers by visualising, transforming and modelling the data
   - Use what you learn to refine your questions and generate new questions
 - The **Goal of EDA** is to:
-  - Develop a clearer understanding & familiarity of the data
+  - Develop a clearer understanding of the data
   - What kind of variation occurs within my variables?
   - What type of covariation occurs between my variables?
+  - Find Patterns in the Data
+  - Deal with Missing Data
+  
+## Understanding the data {.smaller}
+
+```{r}
+# Get the shape of the data
+dim(diamonds)
+```
+
+## Understanding the data {.smaller}
+
+```{r}
+# Get the structure of the data
+str(diamonds)
+```
+
+## Understanding the data {.smaller}
+
+```{r}
+summary(diamonds[, 1:7])
+```
 
 ## Variation of Variables {.smaller}
 
@@ -102,12 +124,6 @@ p_load(ggcorrplot, naniar, psych, tidyverse)
   - **Discrete** <- Gender, Language, Dog breed, Season, etc
   - **Continuous** <- Speed, Height, Age, Income, etc
 - Can you think of some other examples?
-
-## How do you determine the type of variable? {.smaller}
-
-```{r}
-summary(diamonds[, 1:7])
-```
 
 ## How do you determine the type of variable? {.smaller}
 
@@ -147,6 +163,14 @@ ggplot(diamonds, aes(x = carat)) + geom_histogram(bins = 100) + labs(title = "Di
 diamonds %>% filter(carat <= 3) %>% 
   ggplot(aes(x = carat, colour = cut)) + geom_freqpoly(bins = 50) + labs(title = "Distribution of Carat")
 ```
+
+## The Lazy Man {.smaller}
+
+```{r}
+# `plot_histogram()` from the DataExplorer package
+plot_histogram(diamonds[, 1:7])
+```
+
 
 ## Descriptive Statistics {.smaller}
 
