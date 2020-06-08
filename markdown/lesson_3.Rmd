@@ -148,6 +148,33 @@ diamonds %>% filter(carat <= 3) %>%
   ggplot(aes(x = carat, colour = cut)) + geom_freqpoly(bins = 50) + labs(title = "Distribution of Carat")
 ```
 
+## Descriptive Statistics {.smaller}
+
+```{r}
+describe(diamonds[, 1:7])
+```
+
+## Descriptive Statistics {.smaller}
+
+- **Skew**: is a measure of symmetry, or more precisely, the lack of symmetry. A distribution, or data set, is symmetric if it looks the same to the left and right of the center point
+- If the skewness is between -0.5 and 0.5, the data are fairly symmetrical
+- If the skewness is between -1 and -0.5 (negatively skewed) or between 0.5 and 1 (positively skewed), the data are moderately skewed
+- If the skewness is less than -1(negatively skewed) or greater than 1(positively skewed), the data are highly skewed
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/skew.jpeg")
+```
+
+## Descriptive Statistics {.smaller}
+
+- **Kurtosis**: is a measure of whether the data are heavy-tailed or light-tailed relative to a normal distribution
+- Data sets with high kurtosis tend to have heavy tails, or outliers
+- Data sets with low kurtosis tend to have light tails, or lack of outliers
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/kurtosis.jpg")
+```
+
 ## What are you looking for? {.smaller}
 
 - Which values are the most common? Why?
