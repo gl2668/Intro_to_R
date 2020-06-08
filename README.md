@@ -1,7 +1,7 @@
 # R for Data Science
 This is the github repository for a short introductory course to R and how to use R for data science.
 
-The slides and content are a consolidation of lessons and courses that I have picked up over my masters degree at Columbia University.
+The slides and content are a consolidation of lessons and courses that I have picked up during my graduate studies at Columbia University.
 
 The course content covers:
 - Class 1
