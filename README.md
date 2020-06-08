@@ -3,7 +3,7 @@ This is the github repository for a short introductory course to R and how to us
 
 The slides and content are a consolidation of lessons and courses that I have picked up during my graduate studies at Columbia University.
 
-The course content covers:
+**Course Content:**
 - Class 1
   - Basic R Programming
   - Importing and Writing Data
