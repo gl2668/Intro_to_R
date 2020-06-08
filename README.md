@@ -40,7 +40,7 @@ The slides and content are a consolidation of lessons and courses that I have pi
 
 **Datasets:**
 
-- [Covid-19 dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/covid.csv)
+- [Heart Disease dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/heart_disease.rds)
 
 ***
 
