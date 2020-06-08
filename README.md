@@ -16,8 +16,7 @@ The course content covers:
 - Class 4
   - Function Writing with `purrr`
 - Class 5
-  - Basic Statistical Analysis with `psych` and base R
-  - Regression Analysis
+  - Basic Regression Analysis
 - Class 6
   - Basic Machine Learning Concepts with `caret`
 - Class 7
