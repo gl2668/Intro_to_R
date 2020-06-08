@@ -38,6 +38,8 @@ The slides and content are a consolidation of lessons and courses that I have pi
 
 **Practice Assignments:**
 
+- [Assignment 1](http://htmlpreview.github.io/?https://raw.githubusercontent.com/gl2668/R_For_Data_Science/master/assignments/assignment1.html)
+
 **Datasets:**
 
 - [Heart Disease dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/heart_disease.rds)
