@@ -3,7 +3,7 @@ This is the github repository for a short introductory course to R and how to us
 
 The slides and content are a consolidation of lessons and courses that I have picked up during my graduate studies at Columbia University.
 
-**Course Content:**
+# Course Outline:
 - Class 1
   - Basic R Programming
   - Importing and Writing Data
@@ -29,6 +29,7 @@ The slides and content are a consolidation of lessons and courses that I have pi
   - Dashboard & Website Building with `shiny`
 
 # Course Content
+
 **Slides:**
 
 - [Class 1 - Introduction](https://rawcdn.githack.com/gl2668/R_For_Data_Science/e08f498f62f2a363edcc6eeec009a0f463a5f972/slides/lesson_1.html)
