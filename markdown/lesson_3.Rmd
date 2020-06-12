@@ -73,7 +73,27 @@ opts_chunk$set(fig.path="images/",
 library(pacman)
 p_load(DataExplorer, ggcorrplot, naniar, psych, tidyverse)
 ```
-  
+
+## Tips and Tricks {.smaller}
+
+- `dplyr`: `starts_with()` and `ends_with()`
+- Useful for selecting similar columns
+
+```{r}
+iris %>%
+  select(starts_with('Sepal')) %>% head()
+```
+
+## Tips and Tricks {.smaller}
+
+- `dplyr`: `starts_with()` and `ends_with()`
+- Useful for selecting similar columns
+
+```{r}
+iris %>%
+  select(ends_with('Width')) %>% head()
+```
+
 ## What is EDA? {.smaller}
 
 - EDA stands for Exploratory Data Analysis
