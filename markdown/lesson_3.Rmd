@@ -330,7 +330,7 @@ pairs(USArrests, lower.panel=NULL)
 - Datasets are not **clean** all the time
 - Most of the times, you encounter missing data, `is.na()`
 - You can deal with missing data in different ways
-  - Interpolate the data or remove them
+  - **Interpolate**, **Impute** the data or **Remove** them
 - One package that can help you explore missing data is the `naniar` package
   - Visualize your missing data
 
