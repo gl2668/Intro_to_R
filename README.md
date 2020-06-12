@@ -14,7 +14,7 @@ The slides and content are a consolidation of lessons and courses that I have pi
   - Exploratory Data Analysis
   - Dealing with Missing Data using `naniar`
 - Class 4
-  - Function Writing with `purrr`
+  - Functional Programming
 - Class 5
   - Basic Regression Analysis
 - Class 6
