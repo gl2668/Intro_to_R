@@ -244,7 +244,7 @@ ggplot(mpg, aes(x = class, y = hwy)) + geom_boxplot() +
   coord_flip()
 ```
 
-## Visualising covariation with a boxplot {.smaller}
+## Visualising covariation for 2 discrete variables {.smaller}
 
 - For **2 discrete variables**, look at the count of the variables
 
@@ -253,7 +253,7 @@ table(diamonds$color)
 table(diamonds$cut)
 ```
 
-## Visualising covariation with a boxplot {.smaller}
+## Visualising covariation for 2 discrete variables {.smaller}
 
 ```{r}
 diamonds %>% 
@@ -261,7 +261,7 @@ diamonds %>%
   ggplot(aes(x = color, y = cut)) + geom_tile(aes(fill = n))
 ```
 
-## Visualising covariation with a boxplot {.smaller}
+## Visualising covariation for 2 continuous variables {.smaller}
 
 - For **2 continuous variables**, use a scatter plot
 
@@ -269,14 +269,14 @@ diamonds %>%
 ggplot(diamonds, aes(carat, price)) + geom_point(alpha = 0.1, colour = "red")
 ```
 
-## Covariation between variables {.smaller}
+## Covariation between 2 continuous variables {.smaller}
 
 ```{r}
 # Using the `pairs()` function
 pairs(women, lower.panel=NULL)
 ```
 
-## Covariation between variables {.smaller}
+## Covariation between 2 continuous variables {.smaller}
 
 ```{r}
 my_cols <- c("#00AFBB", "#E7B800", "#FC4E07")  
@@ -284,7 +284,7 @@ pairs(iris[,1:4], pch = 19,  cex = 0.5,
       col = my_cols[iris$Species], lower.panel=NULL)
 ```
 
-## Covariation between variables {.smaller}
+## Covariation between 2 continuous variables  {.smaller}
 
 ```{r}
 pairs.panels(iris[,-5], method = "pearson", # correlation method
