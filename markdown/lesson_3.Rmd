@@ -348,10 +348,36 @@ vis_miss(airquality)
 gg_miss_var(airquality)
 ```
 
-
 ## Exploring Missing Mechanisms {.smaller}
 
 ```{r}
 # Use `geom_miss_point()`
 ggplot(airquality, aes(x = Ozone, y = Solar.R)) + geom_miss_point()
 ```
+
+## Recoding Missing Values {.smaller}
+
+- Impute the missing values with the average
+
+```{r}
+x <- c(1:4, NA, 6:7, NA)
+print(x)
+```
+
+```{r}
+# Recode missing values with the man
+x[is.na(x)] <- round(mean(x, na.rm = TRUE))
+print(x)
+```
+
+## Use `na.omit()` to remove all rows with missing values
+
+```{r}
+x <- c(1:4, NA, 6:7, NA)
+print(x)
+```
+
+```{r}
+na.omit(x)
+```
+
