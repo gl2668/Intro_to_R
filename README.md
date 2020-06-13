@@ -13,6 +13,7 @@ The slides and content are a consolidation of lessons and courses that I have pi
 - Class 3
   - Exploratory Data Analysis
   - Dealing with Missing Data using `naniar`
+  - Work on Assignment 1 together
 - Class 4
   - Functional Programming
 - Class 5
