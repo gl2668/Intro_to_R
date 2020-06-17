@@ -46,7 +46,7 @@ The slides and content are a consolidation of lessons and courses that I have pi
 
 **Datasets:**
 
-- [Heart Disease dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/heart_disease.rds)
+- [Cleveland Heart Disease dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/heart_disease.rds) taken from UC Irvine
 
 ***
 
