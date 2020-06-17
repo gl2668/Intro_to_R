@@ -1,0 +1,587 @@
+---
+title: "Class 4 - Functional Programming"
+subtitle: R for Data Science
+author: "Gerald Lee"
+date: "June 12, 2020"
+output:
+  ioslides_presentation:
+    incremental: no
+    keep_md: yes
+    smaller: no
+  slidy_presentation:
+    incremental: no
+mode: selfcontained
+always_allow_html: yes
+---
+
+```{r packages, message = FALSE, warning = FALSE, echo=FALSE}
+# For installing necessary packages
+```
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+
+# A Prefix nulling hook.
+
+# Make sure to keep the default for normal processing.
+default_output_hook <- knitr::knit_hooks$get("output")
+
+# Output hooks handle normal R console output.
+knitr::knit_hooks$set( output = function(x, options) {
+
+  comment <- knitr::opts_current$get("comment")
+  if( is.na(comment) ) comment <- ""
+  can_null <- grepl( paste0( comment, "\\s*\\[\\d?\\]" ),
+                     x, perl = TRUE)
+  do_null <- isTRUE( knitr::opts_current$get("null_prefix") )
+  if( can_null && do_null ) {
+    # By default R print output aligns at the right brace.
+    align_index <- regexpr( "\\]", x )[1] - 1
+    # Two cases: start or newline
+    re <- paste0( "^.{", align_index, "}\\]")
+    rep <- comment
+    x <- gsub( re, rep,  x )
+    re <- paste0( "\\\n.{", align_index, "}\\]")
+    rep <- paste0( "\n", comment )
+    x <- gsub( re, rep,  x )
+  }
+
+  default_output_hook( x, options )
+
+})
+
+knitr::opts_template$set("kill_prefix"=list(comment=NA, null_prefix=TRUE))
+
+
+## Normal Setup From Here
+library(knitr)
+
+opts_chunk$set(fig.path="images/",
+               cache.path="cache/",
+               cache=TRUE,
+               echo=TRUE,
+               message=FALSE,
+               warning=FALSE)
+```
+
+## Required Libraires {.smaller}
+
+- `tidyverse`: includes all the required packages for function writing
+
+```{r}
+library(pacman)
+p_load(tidyverse)
+```
+
+## Outline for today {.smaller}
+
+- Introduction to functions
+  - Syntax of a function
+  - Basic functions
+- Control Flow Function Writing
+  - `if`, `else` and `else if` statements
+- Iterative Function Writing
+  - `for` and `while` loops
+  - `break` and `next`
+- Functional Programming
+
+## What is a function? {.smaller}
+
+- Functions are ways to **automate** repeated / commonly-used actions
+- They make programming more convenient and efficient
+- Functions are recommended over copying and pasting code
+  - They can help to reduce / prevent potential errors from copying and pasting code
+  - The general rule of thumb is to use a function if you are copying and pasting a block of code more than twice
+
+## Syntax of a Function {.smaller}
+
+- A Function is always made up of **3 main parts**:
+  - **Function Name**, must be assigned and used in conjunction with `function()`
+  - **Function Arguments**, within the ( ... )
+  - **Function Body**, within the { ... }
+
+```{r, eval=FALSE}
+# Syntax of a function
+function_name <- function(argument_1, argument_2) {
+  body_of_the_function
+}
+```
+
+## Sample Function {.smaller}
+
+- In this example, we create a function that **adds numbers** together
+- The function name is `addition`
+- The function takes 2 arguments, `number_1` and `number_2`
+- The output of the function is the `sum`, which we use `return()` to produce the output
+
+```{r}
+# Sample Addition Function
+addition <- function(number_1, number_2) {
+  sum <- number_1 + number_2
+  return(sum)
+}
+```
+
+```{r}
+# Run the function
+addition(4, 5)
+```
+
+## Another Sample Function {.smaller}
+
+- This function can be used to **calculate the speed of an object**
+- The formula for speed is $speed = distance / time$
+
+```{r}
+# Build a function to calculate Speed
+speedR <- function(distance, time) {
+  speed <- distance / time
+  return(paste("Speed is", speed, "km per hour"))
+  }
+```
+
+```{r}
+# Run the function for 120km in 2 hours
+speedR(120, 2)
+```
+
+```{r}
+# Run the function for 600km in 3 hours
+speedR(distance = 600, time = 3)
+```
+
+## Your turn to try! {.smaller}
+
+- Can you try writing a function to **convert km into miles?**
+- 1km = 0.621371 miles
+- Remember, a function requires 3 main components
+  - Name
+  - Arguments
+  - Body
+- Test the function for 20 km
+
+## Your turn to try! {.smaller}
+
+```{r}
+km_to_miles <- function(km) {
+  miles <- km * 0.621371
+  return(miles)
+}
+```
+
+```{r}
+# Run the function
+km_to_miles(20)
+```
+
+## Your turn to try! {.smaller}
+
+- Can you try writing a function to **square a number**
+- Remember, a function requires 3 main components
+  - Name
+  - Arguments
+  - Body
+- Test the function for 16
+
+## Your turn to try! {.smaller}
+
+```{r}
+square_this <- function(number) {
+  return(number ^ 2)
+}
+```
+
+```{r}
+# Run the function
+square_this(16)
+```
+
+## Setting Default Arguments {.smaller}
+
+- Function `to_the_power` allows us to take 2 numbers - x and y and produce a result of x ^ y
+
+```{r}
+# We can also set arguments to a default value
+# In this example, we set the default to 2, i.e. square an object
+to_the_power <- function(number, by = 2) {
+  return(number ^ by)
+}
+```
+
+```{r}
+# If we only state one number, the function will default to square
+to_the_power(2)
+```
+
+```{r}
+# If we state 2 numbers, the function will follow accordingly
+# In this case, 2 ^ 3
+to_the_power(2, by = 3)
+```
+
+## Control Flow Function Writing {.smaller}
+
+- Control Flow Statements help us to execute functions based on conditions
+  - They help to automate decision making
+- You can use `if`, `else`, `else if`
+- This can be useful if we only want to run the function if certain conditions are met, e.g. TRUE or FALSE values / string matches / numerical conditions
+
+## Control Flow - `if` statement {.smaller}
+
+- `if` statement is used for a stated condition
+-  It will work for TRUE or FALSE, matches or numerical conditions
+
+```{r}
+# if statement for positive / negative number
+x <- 5 # let x be 5
+if(x > 0){
+print("Positive number")
+}
+```
+
+```{r}
+# if statement for string matches
+x <- "Does this match?"
+if(x == "Does this match?"){
+print("Yes it does!")
+}
+```
+
+## Control Flow - `else` statement {.smaller}
+
+- The `else` statement can be used to specify an action when the `if` condition is not met
+- Needs to be used in conjunciton with the `if` statement
+
+```{r}
+x <- -5 # When the condition is not met there will be no output
+if(x > 0){
+print("Positive number")
+}
+```
+
+```{r}
+x <-  - 5 # let x be 5
+if(x > 0){ 
+print("Positive number")
+} else { # When the condition is not met, print something else
+  print("negative number")
+}
+```
+
+## Control Flow - `else if` statement {.smaller}
+
+- Use `else if` if there are additional conditions
+
+```{r}
+x <-  0 # let x be 5
+if(x > 0){
+print("Positive number")
+} else if (x < 0) {
+  print("negative number")
+} else {
+  print("x = 0")
+}
+```
+
+## Control Flow - if & else statement {.smaller}
+
+- Using the `if` & `else` statement to recode variables
+- Can use the short form version of `ifelse`
+
+```{r}
+# Transmission of vehicles in mtcars dataset
+mtcars$am
+```
+
+```{r}
+# Recode variables by using ifelse
+mtcars$am <- ifelse(mtcars$am == 0, "automatic", "manual")
+mtcars$am
+```
+
+## Your turn to try! {.smaller}
+
+- Can you build a if else function to see if a number is even or odd?
+  - hint: `%%` gives you the remainder of a number
+  
+```{r}
+# example
+4 %% 2 # remainder of 4 / 2
+9 %% 2 # remainder of 9 / 2
+```
+
+## Your turn to try! {.smaller}
+
+```{r}
+x <- 
+if (x %% 2 == 0) {
+  print("number is even")
+} else {
+  print("number is odd")
+}
+```
+
+## Iterative Function Writing - `for` loops {.smaller}
+
+- Loops are used to repeat a sequence of instructions under specified conditions. They provide a means to automate parts of your code that are repeated.
+- A `for` loop is used when you know exactly how many times you want to execute a code
+  - E.g. Run a loop for all the columns in your dataset
+
+## Iterative Function Writing - `for` loops {.smaller}
+
+- Syntax of a `for` loop
+
+```{r, eval = FALSE}
+for (value in sequence) {
+  body
+}
+```
+
+- A sequence can be created via `seq` or `:`
+
+```{r}
+# Create a sequence with seq()
+seq(2010, 2014)
+```
+
+```{r}
+# You can also use ':'
+2010:2014
+```
+
+## Application of `for` loops {.smaller}
+
+- Instead of writing / running a similar code multiple times, write an iterative loop
+
+```{r}
+# Print the year
+print(paste("The year is", 2010))
+print(paste("The year is", 2011))
+print(paste("The year is", 2012))
+```
+
+## Application of `for` loops {.smaller}
+
+```{r}
+for(i in seq(2010, 2014)) {
+  print(paste("The year is", i))
+}
+```
+
+## Application of `for` loops {.smaller}
+
+```{r}
+numbers <- c(1, 3, 5, 2, 8, 9, 11, 13, 12) # Create a list of numbers
+for (number in numbers) {
+  if (number %% 2 == 0) { # if remainder of dividing by 2 == 0
+    print(paste(number, "is even"))
+  } else {
+    print(paste(number, "is odd"))
+  }
+}
+```
+
+## Application of `for` loops {.smaller}
+
+- Lets use `for` loop to demonstrate the Law of Large Numbers for Coin Tossing
+
+```{r}
+# Let's say we flip a Coin 10 times
+sample(c("Heads", "Tails"), 10, rep = TRUE) # rep stands for replace
+```
+
+```{r}
+# How many heads do we get in 10 flips?
+sum(sample(c("Heads", "Tails"), 10, rep = TRUE) == "Heads")
+```
+
+## Application of `for` loops {.smaller}
+
+- Let's run an experiment, flip the coin 10 times and tabulate the number of heads (we shall do this 10 more times)
+- We need to first create an empty list to initializes our variable. This creates a spot in the memory to contain all the outcomes
+
+```{r}
+# Create an empty list called number of heads that will contain the results from our coin toss
+number_of_heads <- c()
+
+# Run the Function for 10 Tries
+for(i in 1:10) {
+  number_of_heads[i] <- sum(sample(c("Heads", "Tails"), 10, rep = TRUE) == "Heads")
+}
+```
+
+```{r}
+print(number_of_heads)
+```
+
+## Application of `for` loops {.smaller}
+
+```{r}
+# Print the histogram of our output for 10 tries
+hist(number_of_heads)
+```
+
+## Application of `for` loops {.smaller}
+
+- Let's run the same experiment but this time for 10,000 tries
+- See how easy `for` loops allow us to scale up our process?
+
+```{r}
+# Create an empty list called number of heads that will contain the results from our coin toss
+number_of_heads <- c()
+
+# Run the Function for 10,000 Tries
+for(i in 1:10000) {
+  number_of_heads[i] <- sum(sample(c("Heads", "Tails"), 10, rep = TRUE) == "Heads")
+}
+```
+
+```{r}
+head(number_of_heads)
+length(number_of_heads)
+```
+
+## Application of `for` loops {.smaller}
+
+```{r}
+# Print the histogram of our output for 10,000 tries
+hist(number_of_heads)
+```
+
+## Use `seq_along` to iterate through a Dataframe {.smaller}
+
+- If you want to iterate through the columns of a dataframe, you can use `seq_along()`
+
+```{r}
+for(i in seq_along(mtcars)) {
+  print(mtcars[i])
+}
+```
+
+## Iterative Function Writing - `while` loops {.smaller}
+
+- `while` loops are used to iterate until a logical statement returns FALSE
+- `while` loops begin by testing a condition. If it is true, then they execute the statement. Once the statement is executed, the condition is tested again, and so forth, until the condition is false, after which the loop exits
+- Syntax of while loop:
+
+```{r, eval = FALSE}
+while(test_expression) {
+  statement
+  }
+```
+
+## Application of `while` loops {.smaller}
+
+```{r}
+counter <- 1 # Set a counter
+while(counter <= 10) { # Run the while loop until counter is 10
+  print(counter)
+  counter <- counter + 1 # Increase the counter everytime the loop runs
+}
+```
+
+## Application of `break` {.smaller}
+
+- A `break` can be used inside a loop to stop the iterations
+- This is a useful task to control the flow of the loop or to stop the function from running when there are errors
+
+```{r}
+x <- -5:5 # Create a sequence -5 to 5
+for (val in x) {
+  print(val)
+  if(val == 0) {
+    break # Stop at zero using the break
+  }
+}
+```
+
+## Application of `break` for error resolution {.smaller}
+
+```{r, eval = FALSE}
+# In this case, an error came up because "A" cannot be multiplied
+# The function will not run
+x <- list(1, 2, 3, 4, "A", 5, 6, 7) 
+for (val in x) {
+  print(val * 2)
+}
+```
+
+## Application of `break` for error resolution {.smaller}
+
+- We can use `break` to run the function but stop at the error
+
+```{r}
+x <- list(1, 2, 3, 4, "A", 5, 6, 7)
+for (val in x) {
+  if(is.numeric(val) != TRUE) {
+    break # Use break to stop the function when an error occurs
+  }
+  print(val * 2)
+}
+```
+
+## Application of `next` for error resolution {.smaller}
+
+- We can also use `next` to "SKIP" over the error 
+
+```{r}
+x <- list(1, 2, 3, 4, "A", 5, 6, 7)
+for (val in x) {
+  if(is.numeric(val) != TRUE) {
+    next # Use next to skip the error and continue
+  }
+  print(val * 2)
+}
+```
+
+## Functional Programming - `apply()` {.smaller}
+
+- `apply()` function acts like loops but they work within the dataframe across rows or columns
+- `apply()` takes 3 arguments
+  - apply(X, MARGIN, FUN)
+  - **X** refers to the matrix / array / dataframe
+  - **MARGIN** is either 1 (rows) or 2 (columns)
+  - **FUN** is the function you will like to apply
+
+## Functional Programming - `apply()` {.smaller}
+
+- Apply the function across rows using MARGIN = 1
+
+```{r}
+apply(mtcars[1:7], 1, sum) # Get the sum of numerical values for each row
+```
+
+## Functional Programming - `apply()` {.smaller}
+
+- Apply the function across columns using MARGIN = 2
+
+```{r}
+apply(mtcars, 2, max) # Find maximum value
+```
+
+## Functional Programming - `lapply()` {.smaller}
+
+- You can also use `lapply()` if you want to return the output in a list format, or if you are already working with lists
+- To know more about data structures, check this chapter by [Hadley Wickham](http://adv-r.had.co.nz/Data-structures.html)
+- Essentially, there are several types of datastructures: atomic vectors, matrix, dataframes, lists
+- A **List** allows you to hold different data such as Numeric, Character, logical, etc
+- A **Vector** will store elements of the same type or convert them implicitly
+    - Lists are recursive, whereas vector is not
+    - Vectors are one-dimensional, whereas lists are multidimensional objects
+
+## Functional Programming - `lapply()` {.smaller}
+
+```{r}
+lapply(mtcars, max) # Find maximum value
+```
+
+## Functional Programming {.smaller}
+
+- R has several functional programming 
+- The `purrr` package from the tidyverse universe also works like the `apply` functions
+  - I won't be covering that in this course because its really similar but you can check that out [here](https://purrr.tidyverse.org/)
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("images/functional_programming.png")
+```
+
+
