@@ -3,8 +3,6 @@ This is the github repository for a short introductory course to R and how to us
 
 The slides and content are a consolidation of lessons and courses that I have picked up during my graduate studies at Columbia University.
 
-***
-
 # Course Content
 
 **Slides:**
@@ -23,8 +21,6 @@ The slides and content are a consolidation of lessons and courses that I have pi
 **Datasets:**
 
 - [Cleveland Heart Disease dataset](https://github.com/gl2668/R_For_Data_Science/blob/master/data/heart_disease.rds) taken from UC Irvine
-
-***
 
 # Course Outline:
 - Class 1
@@ -51,7 +47,5 @@ The slides and content are a consolidation of lessons and courses that I have pi
   - API with `httr`
 - Class 9
   - Dashboard & Website Building with `shiny`
-
-***
 
 Shoutout to [raw.githack](https://raw.githack.com/) for making the viewing of raw html slides possible
